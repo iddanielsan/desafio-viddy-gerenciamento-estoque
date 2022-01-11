@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\FornecedorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,10 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
+Route::post('auth/login', [AuthController::class, 'login']);
 
-], function ($router) {
-    Route::post('/login', [AuthController::class, 'login']);
+Route::middleware(['apiJWT'])->group(function () {
+    Route::apiResource('/fornecedor', FornecedorController::class)->parameters(['fornecedor' => 'fornecedor']);
 });
